@@ -1,3 +1,7 @@
 import {Ambiente} from './src'
 
-Ambiente.create()
+(async () => {
+  const ambiente = new Ambiente()
+  await ambiente.creates()
+  ambiente.display()
+})()
