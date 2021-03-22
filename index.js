@@ -7,6 +7,5 @@ import {Ambiente, Puzzle} from './src'
 
   const puzzle = new Puzzle(ambiente)
   puzzle.move('up')
-  console.log()
   ambiente.display()
 })()
