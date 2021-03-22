@@ -1,6 +1,7 @@
 import prompt from 'prompt'
 
 function Ambiente() {
+  this.position = {x: 0, y: 0}
   this.matriz = null
   /**
    * Creates an Ambiente object
@@ -12,20 +13,24 @@ function Ambiente() {
     try {
       const inputs = await prompt.get(['line1', 'line2', 'line3'])
       const matriz = new Array(3)
-        .fill(Number.NEGATIVE_INFINITY)
-        .map(() => new Array(3))
+        .fill()
+        .map(() => new Array(3).fill())
       
       var i = 0
       Object.keys(inputs).map(item => {
-        const line = inputs[item].split(' ').map(value => {
+        const line = inputs[item].split(' ').map((value, index) => {
           if (value === '_') {
+            this.position = {
+              x: index,
+              y: i,
+            }
             return Number.NEGATIVE_INFINITY
           }
 
           return parseInt(value, 10)
         })
-        line.map(input => {
-          matriz[i].push(input)
+        line.map((input, index) => {
+          matriz[i][index] = input
         })
 
         i++
@@ -41,7 +46,7 @@ function Ambiente() {
     matriz.map(line => {
       line.map(value => {
         if (value === Number.NEGATIVE_INFINITY) {
-          process.stdout.write(' ')
+          process.stdout.write('  ')
         } else {
           process.stdout.write(`${value} `)
         }
