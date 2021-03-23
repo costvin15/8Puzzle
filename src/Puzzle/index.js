@@ -1,12 +1,18 @@
 import Ambiente from '../Ambiente'
 
 /**
+ * Classe representando um tabuleiro
+ * 
  * @param {Ambiente} ambiente 
  */
 function Puzzle(ambiente) {
   this.ambiente = ambiente
 
   /**
+   * Movimenta a peça vazia para a posição desejada, caso
+   * o movimento não seja possível de ser feito, uma exceção
+   * será lançada.
+   * 
    * @param {string} direction 
    */
    this.move = direction => {
@@ -69,6 +75,11 @@ function Puzzle(ambiente) {
         throw new Error('Command not recognized')
     }
   }
+  /**
+   * Verifica se o tabuleiro é igual ao tabuleiro desejado
+   * 
+   * @returns {boolean} 
+   */
   this.verify = () => {
     for (let i = 0; i < this.ambiente.matriz.length; i++) {
       for (let j = 0; j < this.ambiente.matriz[i].length; j++) {
@@ -82,8 +93,10 @@ function Puzzle(ambiente) {
     return true
   }
   /**
+   * Compara um tabuleiro com outro
    * 
    * @param {Puzzle} puzzle 
+   * @returns {boolean}
    */
   this.compare = (puzzle) => {
     for (let i = 0; i < this.ambiente.matriz.length; i++) {

@@ -1,11 +1,18 @@
 import prompt from 'prompt'
 
+/**
+ * Classe representando o ambiente e seu estado
+ */
 function Ambiente() {
+  // Posição da peça vazia neste ambiente
   this.position = {x: 0, y: 0}
+  // Representação do ambiente
   this.matriz = null
   /**
-   * Creates an Ambiente object
-   * @returns {Promise<Ambiente>} Ambiente Object
+   * Através da entrada do usuário, o ambiente é preenchido com
+   * a informação inserida.
+   * 
+   * @returns {Promise<Ambiente>}
    */
   this.creates = async () => {
     prompt.start()
@@ -42,6 +49,9 @@ function Ambiente() {
     }
   }
   /**
+   * Copia os dados do ambiente parâmetro para este ambiente.
+   * Necessário para a implementação pois um objeto em Node.JS
+   * é um ponteiro.
    * 
    * @param {Ambiente} ambiente 
    */
@@ -55,6 +65,9 @@ function Ambiente() {
     this.position.x = ambiente.position.x
     this.position.y = ambiente.position.y
   }
+  /**
+   * Exibe o tabuleiro de forma gráfica na saída padrão
+   */
   this.display = () => {
     const matriz = this.matriz
     matriz.map(line => {

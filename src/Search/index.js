@@ -1,6 +1,8 @@
 import {Ambiente, Puzzle} from '..'
 
 /**
+ * Nó da árvore de busca
+ * 
  * @param {Ambiente} ambiente
  */
 function Node(ambiente, level = 0, parent = null) {
@@ -10,8 +12,11 @@ function Node(ambiente, level = 0, parent = null) {
   this.parent = parent
 
   /**
+   * Esta função testa todos os movimentos possíveis, criando um tabuleiro
+   * para cada, e verificando se o movimento é possível. Caso o movimento
+   * não seja possível, uma exceção será capturada nessa função.
    * 
-   * @returns {Array<Puzzle>} next steps
+   * @returns {Array<Puzzle>} Next steps
    */
   this.possiblesteps = () => {
     const steps = []
@@ -31,6 +36,14 @@ function Node(ambiente, level = 0, parent = null) {
     
     return steps
   }
+  /**
+   * Calcula a função heurística comparando o tabuleiro atual
+   * com o tabuleiro desejado. Cada peça (exceto a peça vazia)
+   * fora do lugar incrementa o valor heurístico. Caso o valor
+   * heurístico seja 0, o tabuleiro é igual ao tabuleiro desejado
+   * 
+   * @returns {int} Heuristic value
+   */
   this.heuristic = () => {
     let counter = 0
     for (let i = 0; i < this.ambiente.matriz.length; i++) {
@@ -49,22 +62,28 @@ function Node(ambiente, level = 0, parent = null) {
 }
 
 function Search() {
+  /**
+   * Executa uma busca A*
+   */
   this.perform =  async () => {
     const expanded = [], nonexpanded = [], path = []
+
+    // Inserindo o tabuleiro informado pelo usuário na árvore
     const rootAmbiente = new Ambiente()
     await rootAmbiente.creates()
-
     const root = new Node(rootAmbiente)
     nonexpanded.push(root)
 
     while (nonexpanded.length !== 0) {
       const current = nonexpanded.shift()
 
+      // Condição de parada da busca
       if (current.puzzle.verify()) {
         path.push(current)
         break
       }
 
+      // Buscando todas os movimentos possíveis e adicionando-os na árvore caso já não estejam
       const next = current.possiblesteps()
       next.map(puzzle => {
         let isAlreadyInTree = false
@@ -80,19 +99,23 @@ function Search() {
         }
       })
 
+      // Ordenando os nós não-expandidos com base na função de avalição f(n) = g(n) + h(n)
       nonexpanded.sort((a, b) => a.evaluation() - b.evaluation())
+      // Adicionando o nó atual na lista de nós expandidos
       expanded.push(current)
     }
 
+    // Através do nó-folha resultante, conseguimos o caminho-resultado
     let currentNode = path.pop()
     while (currentNode.parent !== null) {
       path.push(currentNode)
       currentNode = currentNode.parent
     }
 
+    // Impriminod caminho-resultado
     while (path.length !== 0) {
       currentNode = path.pop()
-      console.log('-----------')
+      console.log('------')
       currentNode.ambiente.display()
     }
   }

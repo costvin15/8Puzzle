@@ -12,6 +12,7 @@
     "sucrase": "^3.17.1"
   },
   "scripts": {
-    "start": "nodemon"
+    "start": "sucrase-node index.js",
+    "start:dev": "nodemon"
   }
 }
