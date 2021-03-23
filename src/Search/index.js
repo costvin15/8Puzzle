@@ -78,6 +78,7 @@ function Search() {
 
     while (nonexpanded.length !== 0) {
       const current = nonexpanded.shift()
+      const hashcode = current.puzzle.hashcode()
 
       // Condição de parada da busca
       if (current.puzzle.verify()) {
@@ -88,14 +89,7 @@ function Search() {
       // Buscando todas os movimentos possíveis e adicionando-os na árvore caso já não estejam
       const next = current.possiblesteps()
       next.map(puzzle => {
-        let isAlreadyInTree = false
-        nonexpanded.map(node => {
-          if (current.puzzle.compare(node.puzzle)) {
-            isAlreadyInTree = true
-          }
-        })
-
-        if (!isAlreadyInTree) {
+        if (expanded[hashcode] === undefined) {
           const node = new Node(puzzle.ambiente, current.level + 1, current)
           nonexpanded.push(node)
         }
@@ -104,7 +98,7 @@ function Search() {
       // Ordenando os nós não-expandidos com base na função de avalição f(n) = g(n) + h(n)
       nonexpanded.sort((a, b) => a.evaluation() - b.evaluation())
       // Adicionando o nó atual na lista de nós expandidos
-      expanded.push(current)
+      expanded[hashcode] = current
     }
 
     // Através do nó-folha resultante, conseguimos o caminho-resultado

@@ -75,6 +75,21 @@ function Puzzle(ambiente) {
         throw new Error('Command not recognized')
     }
   }
+  this.hashcode = () => {
+    let code = ''
+
+    for (let i = 0; i < this.ambiente.matriz.length; i++) {
+      for (let j = 0; j < this.ambiente.matriz[i].length; j++) {
+        if (this.ambiente.matriz[i][j] !== Number.NEGATIVE_INFINITY) {
+          code += this.ambiente.matriz[i][j]
+        } else {
+          code += '0'
+        }
+      }
+    }
+
+    return code
+  }
   /**
    * Verifica se o tabuleiro é igual ao tabuleiro desejado
    * 
