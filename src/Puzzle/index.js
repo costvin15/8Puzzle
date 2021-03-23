@@ -10,19 +10,20 @@ function Puzzle(ambiente) {
    * @param {string} direction 
    */
    this.move = direction => {
-    var piece = null, current = null
+    var current = null, piece = null
 
     switch (direction) {
       case 'up':
         if (this.ambiente.position.y === 0) {
           throw new Error('Unable to move')
         }
-        
-        piece = this.ambiente.matriz[this.ambiente.position.y + 1][this.ambiente.position.x]
-        current = this.ambiente.matriz[this.ambiente.position.y][this.ambiente.position.x]
 
-        this.ambiente.matriz[this.ambiente.position.y + 1][this.ambiente.position.x] = current
+        current = this.ambiente.matriz[this.ambiente.position.y][this.ambiente.position.x]
+        piece = this.ambiente.matriz[this.ambiente.position.y - 1][this.ambiente.position.x]
+
         this.ambiente.matriz[this.ambiente.position.y][this.ambiente.position.x] = piece
+        this.ambiente.matriz[this.ambiente.position.y - 1][this.ambiente.position.x] = current
+        this.ambiente.position.y--
 
         break
       case 'down':
@@ -30,11 +31,12 @@ function Puzzle(ambiente) {
           throw new Error('Unable to move')
         }
 
-        piece = this.ambiente.matriz[this.ambiente.position.y - 1][this.ambiente.position.x]
         current = this.ambiente.matriz[this.ambiente.position.y][this.ambiente.position.x]
+        piece = this.ambiente.matriz[this.ambiente.position.y + 1][this.ambiente.position.x]
 
-        this.ambiente.matriz[this.ambiente.position.y - 1][this.ambiente.position.x] = current
         this.ambiente.matriz[this.ambiente.position.y][this.ambiente.position.x] = piece
+        this.ambiente.matriz[this.ambiente.position.y + 1][this.ambiente.position.x] = current
+        this.ambiente.position.y++
 
         break
       case 'left':
@@ -42,23 +44,25 @@ function Puzzle(ambiente) {
           throw new Error('Unable to move')
         }
 
-        piece = this.ambiente.matriz[this.ambiente.position.y][this.ambiente.position.x + 1]
         current = this.ambiente.matriz[this.ambiente.position.y][this.ambiente.position.x]
+        piece = this.ambiente.matriz[this.ambiente.position.y][this.ambiente.position.x - 1]
 
-        this.ambiente.matriz[this.ambiente.position.y][this.ambiente.position.x + 1] = current
         this.ambiente.matriz[this.ambiente.position.y][this.ambiente.position.x] = piece
+        this.ambiente.matriz[this.ambiente.position.y][this.ambiente.position.x - 1] = current
+        this.ambiente.position.x--
 
         break
       case 'right':
         if (this.ambiente.position.x === 2) {
           throw new Error('Unable to move')
         }
-        
-        piece = this.ambiente.matriz[this.ambiente.position.y][this.ambiente.position.x - 1]
-        current = this.ambiente.matriz[this.ambiente.position.y][this.ambiente.position.x]
 
-        this.ambiente.matriz[this.ambiente.position.y][this.ambiente.position.x - 1] = current
+        current = this.ambiente.matriz[this.ambiente.position.y][this.ambiente.position.x]
+        piece = this.ambiente.matriz[this.ambiente.position.y][this.ambiente.position.x + 1]
+
         this.ambiente.matriz[this.ambiente.position.y][this.ambiente.position.x] = piece
+        this.ambiente.matriz[this.ambiente.position.y][this.ambiente.position.x + 1] = current
+        this.ambiente.position.x++
 
         break
       default:
@@ -69,7 +73,22 @@ function Puzzle(ambiente) {
     for (let i = 0; i < this.ambiente.matriz.length; i++) {
       for (let j = 0; j < this.ambiente.matriz[i].length; j++) {
         if (this.ambiente.matriz[i][j] !== Number.NEGATIVE_INFINITY &&
-          this.ambiente.matriz[i][j] !== (j + 1) + (i * 3)) {
+            this.ambiente.matriz[i][j] !== j + i * 3 + 1) {
+          return false
+        }
+      }
+    }
+
+    return true
+  }
+  /**
+   * 
+   * @param {Puzzle} puzzle 
+   */
+  this.compare = (puzzle) => {
+    for (let i = 0; i < this.ambiente.matriz.length; i++) {
+      for (let j = 0; j < this.ambiente.matriz[i].length; j++) {
+        if (this.ambiente.matriz[i][j] !== puzzle.ambiente.matriz[i][j]) {
           return false
         }
       }

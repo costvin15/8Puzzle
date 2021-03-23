@@ -1,11 +1,7 @@
-import {Ambiente, Puzzle} from './src'
+import {Search} from './src'
 
 (async () => {
-  const ambiente = new Ambiente()
-  await ambiente.creates()
-  ambiente.display()
-
-  const puzzle = new Puzzle(ambiente)
-  puzzle.move('up')
-  ambiente.display()
+  // console.log(puzzle.verify())
+  // console.log(puzzle.heuristic())
+  await new Search().perform()
 })()

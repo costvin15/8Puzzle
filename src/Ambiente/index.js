@@ -41,6 +41,20 @@ function Ambiente() {
       console.error(error)
     }
   }
+  /**
+   * 
+   * @param {Ambiente} ambiente 
+   */
+  this.copy = (ambiente) => {
+    this.matriz = new Array(3)
+        .fill()
+        .map(() => new Array(3).fill())
+    ambiente.matriz.map((line, index) => {
+      this.matriz[index] = [...line]
+    })
+    this.position.x = ambiente.position.x
+    this.position.y = ambiente.position.y
+  }
   this.display = () => {
     const matriz = this.matriz
     matriz.map(line => {

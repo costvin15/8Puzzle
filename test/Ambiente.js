@@ -12,9 +12,9 @@ const userInput = inputs => {
   })
 }
 
-describe('Ambient', () => {
+describe('Ambiente', () => {
   describe('Create', () => {
-    it('Creating ambient', async () => {
+    it('Creating ambiente', async () => {
       userInput(['7', '2', '4'])
       userInput(['5', '_', '6'])
       userInput(['8', '3', '1'])
