@@ -25,6 +25,8 @@ sempre 3 números inteiros por linha, e _ para informar a peça vazia.
 
 ### Exemplo
 
+```
 7 2 4
 5 _ 6
 8 3 1
+```
