@@ -74,6 +74,8 @@ function Search() {
     const root = new Node(rootAmbiente)
     nonexpanded.push(root)
 
+    console.log('Aguarde...')
+
     while (nonexpanded.length !== 0) {
       const current = nonexpanded.shift()
 
@@ -112,7 +114,8 @@ function Search() {
       currentNode = currentNode.parent
     }
 
-    // Impriminod caminho-resultado
+    console.log('Resolução passo-a-passo:')
+    // Imprimindo o caminho-resultado
     while (path.length !== 0) {
       currentNode = path.pop()
       console.log('------')
