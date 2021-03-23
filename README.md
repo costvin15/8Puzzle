@@ -30,3 +30,13 @@ sempre 3 números inteiros por linha, e _ para informar a peça vazia.
 5 _ 6
 8 3 1
 ```
+
+### Tabela resultado
+
+Para resolver este puzzle, foi definida a seguinte tabela como resultado válido:
+
+````
+1 2 3
+4 5 6
+7 8 _
+```
